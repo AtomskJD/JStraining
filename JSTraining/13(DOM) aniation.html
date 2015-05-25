@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <div style="text-align:center;">
+    <img style="position: relative;" src="cat.png" alt="cat">
+  </div>
+
+  <script>
+  // TODO: сделать шляпу коту
+  // FIXME: OOLOLLOOLL
+    var cat = document.querySelector("img");
+    var angle = 0;
+    var lastTime = null;
+
+    function animate (time) {
+      if (lastTime != null) {
+        angle += (time - lastTime) * 0.001;
+      }
+      lastTime = time;
+      cat.style.top = (Math.sin(angle) * 50 ) + "px";
+      cat.style.left = (Math.cos(angle) * 200 ) + "px";
+
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>
