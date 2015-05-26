@@ -8,6 +8,7 @@
 <div id="table-wrapper"></div>
 
 <script>
+console.log("WTF");
 var MOUNTAINS = [
 {name: "Kilimanjaro", height: 5895, country: "Tanzania"},
 {name: "Everest", height: 8848, country: "Nepal"},
@@ -22,8 +23,25 @@ var MOUNTAINS = [
 
 
 function buildTable(rows){
+  console.log("obj");
+  var table = document.createElement("table");
+  var tableRows = [];
 
+  rows.forEach(function(elem) {
+    var row = document.createElement("tr");
+    for (i in elem) {
+      var cell = document.createElement("td");
+      cell.appendChild(document.createTextNode(elem[i]));
+
+      row.appendChild(cell);
+    }
+    table.appendChild(row);
+  });
+
+  document.body.appendChild(table);
 }
+
+buildTable(MOUNTAINS);
 
 
 </script>
