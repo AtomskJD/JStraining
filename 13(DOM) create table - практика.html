@@ -30,6 +30,7 @@ function buildTable(rows){
   rows.forEach(function(elem) {
     var row = document.createElement("tr");
     for (i in elem) {
+      // console.log(i);
       var cell = document.createElement("td");
       cell.appendChild(document.createTextNode(elem[i]));
 
@@ -43,6 +44,42 @@ function buildTable(rows){
 
 buildTable(MOUNTAINS);
 
+
+// creating constructor
+function TableCell(data)
+{
+  this.value = data;
+}
+
+TableCell.prototype.draw = function(){
+  var td = document.createElement("td");
+  td.appendChild(document.createTextNode(this.value))
+  return td;
+}
+
+// creating prototype of table headers
+function TableHeaders(data)
+{
+  this.value = data;
+}
+
+TableHeaders.prototype.draw = function(){
+  var th = document.createElement("th");
+  td.appendChild(document.createTextNode(this.value))
+  return th;
+}
+
+
+function drawRow(row){
+  var tr = document.createElement("tr");
+  for (coll in row) {
+    if (row.hasOwnProperty(coll)) {
+      var cell = new TableCell(row[coll]);
+      tr.appendChild(cell.draw());
+    }
+  }
+  return tr;
+}
 
 </script>
 
