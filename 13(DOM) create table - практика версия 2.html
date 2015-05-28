@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Создание таблицы</title>
+</head>
+<body>
+<div id="table-wrapper"></div>
+
+<script>
+console.log("WTF");
+var MOUNTAINS = [
+{name: "Kilimanjaro", height: 5895, country: "Tanzania"},
+{name: "Everest", height: 8848, country: "Nepal"},
+{name: "Mount Fuji", height: 3776, country: "Japan"},
+{name: "Mont Blanc", height: 4808, country: "Italy/France"},
+{name: "Vaalserberg", height: 323, country: "Netherlands"},
+{name: "Denali", height: 6168, country: "United States"},
+{name: "Popocatepetl", height: 5465, country: "Mexico"}
+];
+
+// TODO: Make a function that, given array of objects, builds up a DOM structure. Use Object.keys function, which returns an array containing the property names.
+
+// creating constructor
+function TableCell(data)
+{
+  this.value = data;
+}
+
+TableCell.prototype.draw = function(){
+  var td = document.createElement("td");
+  td.appendChild(document.createTextNode(this.value))
+  return td;
+}
+
+// creating prototype of table headers
+function TableHeaders(data)
+{
+  this.value = data;
+}
+
+TableHeaders.prototype.draw = function(){
+  var th = document.createElement("th");
+  th.appendChild(document.createTextNode(this.value))
+  return th;
+}
+
+// row = [{cell}, {cell}, {cell}]
+// cell.value cell.draw();
+function drawRow(row){
+  var tr = document.createElement("tr");
+
+  row.forEach(function(cell) {
+    tr.appendChild(cell.draw());
+  });
+  return tr;
+}
+
+function drawTable(rows){
+  var table = document.createElement("table");
+  // array[rows+1 {cell}, {cell}]
+  var tableHeaders = Object.keys(rows[0]).map(function(headerCell){
+    return new TableHeaders(headerCell);
+  });
+
+
+  var tableRows = rows.map(function(row){
+    var tableRow = [];
+    for (cell in row) {
+      if (row.hasOwnProperty(cell)) {
+        tableRow.push(new TableCell(row[cell]));
+      }
+    }
+    return tableRow;
+  });
+
+
+    table.appendChild(drawRow(tableHeaders));
+
+  tableRows.forEach(function(row) {
+    table.appendChild(drawRow(row));
+  });
+
+  return table;
+}
+
+
+document.body.appendChild(drawTable(MOUNTAINS));
+</script>
+
+
+</body>
+</html>
