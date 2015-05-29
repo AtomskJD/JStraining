@@ -21,31 +21,6 @@ var MOUNTAINS = [
 
 // TODO: Make a function that, given array of objects, builds up a DOM structure. Use Object.keys function, which returns an array containing the property names.
 
-
-function buildTable(rows){
-  console.log("obj");
-  var table = document.createElement("table");
-  var tableRows = [];
-
-  rows.forEach(function(elem) {
-    var row = document.createElement("tr");
-    for (i in elem) {
-      // console.log(i);
-      var cell = document.createElement("td");
-      cell.appendChild(document.createTextNode(elem[i]));
-
-      row.appendChild(cell);
-    }
-    table.appendChild(row);
-  });
-
-  document.body.appendChild(table);
-}
-
-buildTable(MOUNTAINS);
-
-
-<<<<<<< HEAD
 // creating constructor
 function TableCell(data)
 {
@@ -66,32 +41,51 @@ function TableHeaders(data)
 
 TableHeaders.prototype.draw = function(){
   var th = document.createElement("th");
-  td.appendChild(document.createTextNode(this.value))
+  th.appendChild(document.createTextNode(this.value))
   return th;
 }
 
-
+// row = [{cell}, {cell}, {cell}]
+// cell.value cell.draw();
 function drawRow(row){
   var tr = document.createElement("tr");
+
   row.forEach(function(cell) {
     tr.appendChild(cell.draw());
   });
   return tr;
 }
 
-
 function drawTable(rows){
   var table = document.createElement("table");
-  var headers = drawRow
-  rows.forEach(function(row) {
-    // table <- drawRow <- array({cell}, {cell}, {cell})
-
+  // array[rows+1 {cell}, {cell}]
+  var tableHeaders = Object.keys(rows[0]).map(function(headerCell){
+    return new TableHeaders(headerCell);
   });
+
+
+  var tableRows = rows.map(function(row){
+    var tableRow = [];
+    for (cell in row) {
+      if (row.hasOwnProperty(cell)) {
+        tableRow.push(new TableCell(row[cell]));
+      }
+    }
+    return tableRow;
+  });
+
+
+    table.appendChild(drawRow(tableHeaders));
+
+  tableRows.forEach(function(row) {
+    table.appendChild(drawRow(row));
+  });
+
   return table;
 }
 
-=======
->>>>>>> origin/master
+
+document.body.appendChild(drawTable(MOUNTAINS));
 </script>
 
 
