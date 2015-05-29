@@ -72,13 +72,21 @@ TableHeaders.prototype.draw = function(){
 
 function drawRow(row){
   var tr = document.createElement("tr");
-  for (coll in row) {
-    if (row.hasOwnProperty(coll)) {
-      var cell = new TableCell(row[coll]);
-      tr.appendChild(cell.draw());
-    }
-  }
+  row.forEach(function(cell) {
+    tr.appendChild(cell.draw());
+  });
   return tr;
+}
+
+
+function drawTable(rows){
+  var table = document.createElement("table");
+  var headers = drawRow
+  rows.forEach(function(row) {
+    // table <- drawRow <- array({cell}, {cell}, {cell})
+
+  });
+  return table;
 }
 
 </script>
