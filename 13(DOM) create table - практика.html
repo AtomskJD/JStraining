@@ -73,12 +73,16 @@ TableHeaders.prototype.draw = function(){
 
 function drawRow(row){
   var tr = document.createElement("tr");
-  row.forEach(function(cell) {
-    tr.appendChild(cell.draw());
-  });
+  for (coll in row) {
+    if (row.hasOwnProperty(coll)) {
+      var cell = new TableCell(row[coll]);
+      tr.appendChild(cell.draw());
+    }
+  }
   return tr;
 }
 
+<<<<<<< HEAD
 
 function drawTable(rows){
   var table = document.createElement("table");
@@ -92,6 +96,8 @@ function drawTable(rows){
 
 =======
 >>>>>>> origin/master
+=======
+>>>>>>> parent of 01e3ad5... Try it at work
 </script>
 
 
