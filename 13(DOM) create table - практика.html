@@ -45,59 +45,6 @@ function buildTable(rows){
 buildTable(MOUNTAINS);
 
 
-<<<<<<< HEAD
-// creating constructor
-function TableCell(data)
-{
-  this.value = data;
-}
-
-TableCell.prototype.draw = function(){
-  var td = document.createElement("td");
-  td.appendChild(document.createTextNode(this.value))
-  return td;
-}
-
-// creating prototype of table headers
-function TableHeaders(data)
-{
-  this.value = data;
-}
-
-TableHeaders.prototype.draw = function(){
-  var th = document.createElement("th");
-  td.appendChild(document.createTextNode(this.value))
-  return th;
-}
-
-
-function drawRow(row){
-  var tr = document.createElement("tr");
-  for (coll in row) {
-    if (row.hasOwnProperty(coll)) {
-      var cell = new TableCell(row[coll]);
-      tr.appendChild(cell.draw());
-    }
-  }
-  return tr;
-}
-
-<<<<<<< HEAD
-
-function drawTable(rows){
-  var table = document.createElement("table");
-  var headers = drawRow
-  rows.forEach(function(row) {
-    // table <- drawRow <- array({cell}, {cell}, {cell})
-
-  });
-  return table;
-}
-
-=======
->>>>>>> origin/master
-=======
->>>>>>> parent of 01e3ad5... Try it at work
 </script>
 
 
