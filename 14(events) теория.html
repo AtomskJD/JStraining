@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>События</title>
+</head>
+<body>
+  <button type="button" name="button" id="dodo">dodo</button>
+  <button type="button" name="button" id="which">which</button>
+
+  <p id="paragraph1"><button type="button" name="button" id="propaBtn">stop propagation</button></p>
+
+  <button>A</button>
+  <button>B</button>
+  <button>C</button>
+
+
+  <script>
+    var button = document.getElementById("dodo");
+    function once() {
+      console.log("DODO");
+      button.removeEventListener("click", once);
+    }
+    button.addEventListener("click", once);
+
+    var whichBtn = document.getElementById("which");
+    whichBtn.addEventListener("mousedown", function(event) {
+      console.log(event.which);
+    });
+
+
+    var // propagation sample
+      parag = document.querySelector("#paragraph1"),
+      propaBtn = document.querySelector("#propaBtn");
+
+      parag.addEventListener("mousedown", function() {
+        console.log("Это параграф");
+      });
+
+      propaBtn.addEventListener( "mousedown", function( event ) {
+        console.log("Это кнопка");
+        if ( event.which == 3 ) {
+          event.stopPropagation();
+
+        }
+      });
+
+
+      // привязывает событие через таргет
+      document.body.addEventListener( "click", function( event ) {
+        if ( event.target.nodeName === "BUTTON" ) {
+          console.log("Щелкнуто", event.target.textContent);
+        }
+      });
+  </script>
+</body>
+</html>
