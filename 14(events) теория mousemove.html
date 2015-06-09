@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>mousemove</title>
+</head>
+<body>
+  <div class="mousemoover" style="background: #C0C; width: 50px; height: 20px;"></div>
+
+
+  <script>
+    var lastX,
+      rect = document.querySelector(".mousemoover");
+
+    rect.addEventListener( "mousedown", function( event ) {
+      if (event.which == 1) {
+        lastX = event.pageX;
+        addEventListener( "mousemoover", moved);
+        event.preventDefault();
+      }
+    });
+
+    function moved ( event ) {
+      if ( event.which != 1 ) {
+        removeEventLIstener("mousemoove". moved);
+      } else {
+        var dist = event.pageX - lastX,
+        newWidth = Math.map(10, rect.offsetWidth = dist);
+        rect.style.width = newWidth + "px";
+        lastX = event.pageX;
+      }
+    }
+  </script>
+</body>
+</html>
