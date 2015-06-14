@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <p>Имя: <input type="text" data-help="Ваше полное имя"></p>
+<p>Возраст: <input type="text" data-help="Возраст в годах"></p>
+<p id="help"></p>
+
+<script>
+  var help = document.querySelector("#help");
+  var fields = document.querySelectorAll("input");
+  for (var i = 0; i < fields.length; i++) {
+    fields[i].addEventListener("focus", function(event) {
+      var text = event.target.getAttribute("data-help");
+      help.textContent = text;
+    });
+    fields[i].addEventListener("blur", function(event) {
+      help.textContent = "";
+    });
+  }
+  window.addEventListener( "focus", function(){ document.body.style.opacity = 1;} );
+  window.addEventListener( "blur", function(){ document.body.style.opacity = 0.2;} );
+</script>
+
+</body>
+</html>

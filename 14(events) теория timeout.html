@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    document.body.style.background = "#C0C";
+
+    setTimeout( function() {
+      document.body.style.background = "red";
+    }, 2000 );
+
+    var timeBomb = setTimeout( function() {
+      console.log("DODOD BOOM!!!");
+    }, 1000 );
+
+    if ( Math.random() < 0.5 ) {
+      console.log("defused (((");
+      clearTimeout(timeBomb);
+    }
+
+
+    var ticks = 0,
+      clock = setInterval( function() {
+        console.log( "тик: ", ticks++ );
+        if ( ticks == 10 ) {
+          clearInterval( clock );
+          console.log("clock stopped");
+        }
+      }, 1000 );
+// есть проблема
+for (var i = 0; i < 10; i++){
+  setTimeout(function(){console.log(i)}, i * 1000);
+}
+// выведет 10 раз по 10
+
+// решений несколько
+// тут мы смогли изолировать итератор
+      for (var i = 0; i < 10; i++){
+        setTimeout((function(){console.log(i)})(), i * 1000);
+      }
+// тут мы учли таймаут но итератор по прежнему имеет финальное значение
+      for (var i = 0; i < 10; i++){
+        setTimeout( function(){console.log('alert!!!')}, 1000 * i );
+      }
+// вооот она рыба моей мечты
+// изолирующая анонимная функция самовызова теперь включает все выражение
+      for (var i = 0; i < 10; i++){
+        ( function(inx){
+            setTimeout( function() { console.log(inx) }, 1000 * i ); // 1000 * inx == the same
+        } )(i)
+      }
+  </script>
+
+
+  <textarea name="texttimeout" rows="8" cols="40"></textarea>
+  <script type="text/javascript">
+    var textarea = document.querySelector("textarea"),
+      timeout;
+
+      textarea.addEventListener( "keydown", function() {
+        clearTimeout(timeout);
+        timeout = setTimeout( function() {
+          console.log("You stoppt!!!");
+        }, 1000 );
+      } );
+  </script>
+
+<div class="coords" style="color: #FFF;"></div>
+  <script type="text/javascript">
+    function displayCoords( event ) {
+      var coords = document.querySelector(".coords");
+      coords.textContent = "Mouse on "+ event.pageX +", "+ event.pageY;
+
+    }
+
+    var scheduled = false,
+      lastEvent;
+      addEventListener( "mousemove", function( event ) {
+        lastEvent = event;
+        if ( !scheduled ) {
+          scheduled = true;
+          setTimeout( function() {
+            scheduled = false;
+            displayCoords(lastEvent);
+          }, 500 );
+        }
+      });
+
+// there is my solution
+// function coords( event ){
+//   console.log( event.pageX + " - " + event.pageY );
+// }
+// var trigger = true;
+// addEventListener( "mousemove", function( event ){
+//
+//   if (trigger){
+//     trigger = false;
+//
+//     setTimeout( function(){
+//       coords( event );
+//       trigger = true;
+//     }, 2000);
+//
+//   }
+// });
+  </script>
+</body>
+</html>

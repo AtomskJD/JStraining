@@ -13,16 +13,16 @@
       rect = document.querySelector(".mousemoover");
 
     rect.addEventListener( "mousedown", function( event ) {
-      if (event.which == 1) {
+        console.log(event);
         lastX = event.pageX;
         addEventListener( "mousemove", moved);
+        addEventListener( "mouseup", moved);
         event.preventDefault();
-      }
     });
 
     function moved ( event ) {
       if ( event.which != 1 ) {
-        removeEventLIstener("mousemove". moved);
+        removeEventListener("mousemove", moved);
       } else {
         var dist = event.pageX - lastX,
         newWidth = Math.max(10, rect.offsetWidth + dist);
@@ -31,5 +31,23 @@
       }
     }
   </script>
+
+  <p>Наведите мышь на этот <strong>параграф </strong>.</p>
+<script>
+  var para = document.querySelector("p");
+  function isInside(node, target) {
+    for (; node != null; node = node.parentNode)
+      if (node == target) return true;
+  }
+  para.addEventListener("mouseover", function(event) {
+    if (!isInside(event.relatedTarget, para))
+      para.style.color = "red";
+  });
+  para.addEventListener("mouseout", function(event) {
+    if (!isInside(event.relatedTarget, para))
+      para.style.color = "";
+  });
+</script>
+
 </body>
 </html>

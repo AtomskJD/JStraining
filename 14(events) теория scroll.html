@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>mastering Scroll event</title>
+</head>
+<body>
+<style>
+  body{
+    height: 2000px;
+  }
+  .progress{
+    border: 1px solid blue;
+    width: 100px;
+    position: fixed;
+    top: 10px; right: 10px;
+  }
+  .progress > div{
+    height: 12px;
+    background: #CFC;
+    width: 0%;
+  }
+
+  .progress > span{
+    position: absolute;
+    height: 100%;
+    width: 2px;
+    background: black;
+    top: 0;
+  }
+</style>
+
+<div class="progress"><div></div></div>
+<p>scroll me...</p>
+<script>
+  var scrollBar = document.querySelector( ".progress div" );
+
+  addEventListener( "scroll", function(){
+    console.log( document.body.scrollHeight, innerHeight );
+    var max = document.body.scrollHeight - innerHeight,
+      percent = ( pageYOffset / max ) * 100;
+
+      scrollBar.style.width = percent + "%";
+
+  } );
+</script>
+</body>
+</html>
