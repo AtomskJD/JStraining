@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas</title>
+</head>
+<body>
+  <canvas id="canvas-1" width="300" height="300"></canvas>
+  <canvas id="canvas-2" width="100" height="100"></canvas>
+  <canvas id="canvas-3" width="300" height="300"></canvas>
+  <script type="text/javascript">
+    var cx = document.querySelector("#canvas-1").getContext("2d");
+    cx.beginPath();
+
+    for ( var y = 10; y < 300; y += 10 ) {
+      cx.moveTo( 10, y );
+      cx.lineTo( 290, y );
+    }
+    cx.lineWidth = 4;
+    cx.strokeStyle = "#0C0";
+    cx.stroke();
+
+
+    cx = document.querySelector("#canvas-2").getContext("2d");
+    cx.beginPath();
+    cx.moveTo( 50, 10 );
+
+    cx.lineTo( 10, 70 );
+    cx.lineTo( 90, 70 );
+    cx.fillStyle = "#cf5";
+    cx.fill();
+    var results = [
+      {name: "Удовлетворён", count: 1043, color: "lightblue"},
+      {name: "Нейтральное", count: 563, color: "lightgreen"},
+      {name: "Не удовлетворён", count: 510, color: "pink"},
+      {name: "Без комментариев", count: 333, color: "silver"}
+    ];
+    cx = document.querySelector("#canvas-3").getContext("2d");
+    var total = results.reduce(function( sum, choice ){
+        return sum + choice.count;
+      }, 0);
+    var currentAngle = -0.5 * Math.PI;
+
+      results.forEach(function( result ) {
+        var sliceAngle = ( result.count / total ) * 2 * Math.PI;
+        cx.beginPath();
+        cx.arc(100, 100, 100, currentAngle, currentAngle + sliceAngle);
+        currentAngle += sliceAngle;
+        cx.lineTo( 100, 100 );
+        cx.fillStyle = result.color;
+        cx.fill();
+      });
+
+  </script>
+</body>
+</html>

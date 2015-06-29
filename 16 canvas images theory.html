@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas IMAGES</title>
+</head>
+<body>
+  <canvas></canvas>
+  <script>
+    var cx = document.querySelector("canvas").getContext("2d"),
+      img = document.createElement("img");
+      img.src = "./cat.png";
+      img.addEventListener("load", function() {
+        for ( var x = 10; x < 200; x += 30 ) {
+          cx.drawImage( img, x, 10 );
+        }
+      });
+  </script>
+</body>
+</html>
