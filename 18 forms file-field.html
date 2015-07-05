@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File field</title>
+</head>
+<body>
+  <input type="file" multiple>
+
+
+  <script type="text/javascript">
+    var input = document.querySelector("input");
+    input.addEventListener("change", function() {
+      Array.prototype.forEach.call( input.files, function( file ) {
+        var reader = new FileReader();
+        // регистрация события до вызова запутано, но правильно
+        reader.addEventListener( "load", function() {
+          console.log("File", file.name, "status with", reader.result.slice(0, 20));
+        });
+
+        reader.readAsText( file );
+      });
+
+
+      for (var i = 0; i < input.files.length; i++) {
+        var reader = new FileReader();
+        reader.addEventListener( "load", function() {
+          console.log(reader.result.slice(0,100));
+        })
+        reader.readAsText( input.files[i] );
+      }
+    });
+  </script>
+</body>
+</html>
