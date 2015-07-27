@@ -6,11 +6,8 @@ function start ( route, handle ) {
     var pathName = url.parse( request.url ).pathname;
     console.log("request for " + pathName + " received.");
 
-    // route( handle, pathName );
+    route( handle, pathName, response );
 
-    response.writeHead( 200, {"Content-type": "text/plain"});
-    response.write(route( handle, pathName ));
-    response.end();
   }).listen(8888);
 
   console.log("Server Started");
