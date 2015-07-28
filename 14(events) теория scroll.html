@@ -36,7 +36,7 @@
   var scrollBar = document.querySelector( ".progress div" );
 
   addEventListener( "scroll", function(){
-    console.log( document.body.scrollHeight, innerHeight );
+    console.log( document.body.scrollHeight, innerHeight, pageYOffset );
     var max = document.body.scrollHeight - innerHeight,
       percent = ( pageYOffset / max ) * 100;
 
