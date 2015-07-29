@@ -3,19 +3,10 @@ var http = require("http"),
 
 function start ( route, handle ) {
   http.createServer( function ( request, response ) {
-    var postData = "";
     var pathName = url.parse( request.url ).pathname;
     console.log("request for " + pathName + " received.");
 
-    request.setEncoding("utf-8");
-    request.addListener( "data", function (postDataChunk) {
-      postData += postDataChunk;
-      console.log("Received POST data chunk '" + postDataChunk + "'.");
-    });
-
-    request.addListener("end", function () {
-      route( handle, pathName, response, postData );
-    });
+    route( handle, pathName, response, request );
 
   }).listen(8888);
 
