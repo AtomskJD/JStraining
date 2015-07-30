@@ -35,8 +35,12 @@ function upload ( response, request ) {
     // can throw errors in W system
     fs.rename(files.upload.path, "/tmp/test.png", function (err) {
       if (err) {
-        fs.unlink("/tmp/test.png");
-        fs.rename(files.upload.path, "/tmp/test.png");
+        fs.unlink("/tmp/test.png", function ( erroz ) {
+          console.log( erroz );
+        });
+        fs.rename(files.upload.path, "/tmp/test.png", function () {
+          console.log(files.upload.path);
+        });
       }
     });
     response.writeHead(200, {"Content-type": "text/html"});
