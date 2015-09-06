@@ -12,8 +12,8 @@ Router.prototype.add = function ( method, url, handler ) {
 Router.prototype.resolve = function ( request, response ) {
   var path = require("url").parse( request.url ).pathname;
 
-  return this.routes.some(function ( roure ) {
-    car math = route.url.exec( path );
+  return this.routes.some(function ( route ) {
+    var match = route.url.exec( path );
     if (!match || route.method != request.method ) {
       return false;
     }

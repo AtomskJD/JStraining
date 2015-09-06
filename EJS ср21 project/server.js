@@ -22,7 +22,7 @@ function respond( response, status, data, type ) {
 
 
 function respondJSON( response, status, data ) {
-  respond( response, status, JSON.stringify( data ), "application/json"
+  respond( response, status, JSON.stringify( data ), "application/json");
 }
 
 function readStreamJSON( stream, callback ) {
@@ -53,7 +53,7 @@ router.add("GET", /^\/talks\/([^\/]+)$/, function ( request, response, title ) {
   if ( title in talks ) {
     respondJSON( response, 200, talks[title]);
   } else {
-    reapond (response, 404, "NO talk '" +title+ "' found");
+    respond (response, 404, "NO talk '" +title+ "' found");
   }
 });
 
@@ -110,6 +110,34 @@ router.add( "POST", /^\/talks\/([^\/]+)\/comments$/, function (request, response
 });
 
 
+router.add( "GET", /^\/talks$/, function ( request, response ) {
+  var query = require("url").parse(request.url, true).query;
+  if ( query.changeSince == null ) {
+    var list = [];
+    for (var title in talks) {
+      if (talks.hasOwnProperty(title)) {
+        list.push( talks[title] );
+      }
+    }
+    sedTalks( list, response );
+
+  } else {
+    var since = Numver( query.changSince );
+    if (isNaN(since)) {
+      respond(response, 400, "Invalid parametr");
+    } else {
+      var changed = getChangedTalks( since );
+      if ( changed.length > 0 ) {
+        sendTalks( changed, response );
+      } else {
+        waitForChanges( since, response );
+      }
+    }
+  }
+
+})
+
+
 
 
 // long queries
@@ -118,4 +146,48 @@ function sendTalks( talks, response ) {
     serverTime: Date.now(),
     talks: talks
   });
+}
+
+
+var waiting = [];
+function waitForChanges( since, response ) {
+  var waiter = {since: since, response: response};
+  waiting.push( waiter );
+  setTimeout( function () {
+    var found = waiting.indexOf( waiter );
+    if ( found > -1 ) {
+      waiting.splice( found, 1 );
+      sendTalks([], response );
+    }
+  }, 90 * 1000);
+}
+
+var changes = [];
+function registerChange( title ) {
+  change.push({title: title, time: Date.now()});
+  waiting.forEach( function (waiter) {
+    sendTalks(getChangedTalks(waiter.since), waiter.response);
+  });
+
+  waiting = [];
+}
+
+
+function getChangedTalks(since) {
+  var found = [];
+  function alreadySeen(title) {
+    return found.some(function(f) {return f.title == title;});
+  }
+  for (var i = changes.length - 1; i >= 0; i--) {
+    var change = changes[i];
+    if (change.time <= since)
+      break;
+    else if (alreadySeen(change.title))
+      continue;
+    else if (change.title in talks)
+      found.push(talks[change.title]);
+    else
+      found.push({title: change.title, deleted: true});
+  }
+  return found;
 }

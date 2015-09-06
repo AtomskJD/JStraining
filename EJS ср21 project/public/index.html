@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Сайт по обмену опытом</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Обмен опытом</h1>
+  <p>Your name: <input type="text" id="name"></p>
+  <form id="newtalk" action="">
+    <h3>Submit a talk</h3>
+    title: <input type="text" style="width: 40em;" name="title">
+    <br>
+    Summary: <input type="text" style="width: 40em;" name="summary">
+
+    <button type="submit">Send</button>
+  </form>
+  <div id="talks"></div>
+
+
+<!-- template -->
+  <div id="template" style="display: none">
+  <div>
+    <h2>{{title}}</h2>
+    <div>by <span>{{presenter}}</span></div>
+    <p>{{summary}}</p>
+    <div></div>
+    <form>
+      <input type="text" name="comment">
+      <button type="submit">Добавить комментарий</button>
+      <button type="button">Удалить тему</button>
+    </form>
+  </div>
+  <div>
+    <span>{{author}}</span>: {{message}}
+  </div>
+</div>
+
+
+<script src="skillsharring_client.js" charset="utf-8"></script>
+</body>
+</html>
